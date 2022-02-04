@@ -1,3 +1,5 @@
+// documenation on web socket https://github.com/websockets/ws/blob/master/doc/ws.md
+
 // to call on web socket you need to require http web model
 const http = require('http');
 
@@ -10,8 +12,20 @@ const server = http.createServer((req, res) => {
 });
 
 // after this you create a new websocket and pass in the server object
-const wss = websocket.Server({server})
+// the websocket is watching for traffic on the server
+const wss = new websocket.Server({server})
 
+// msg is used to display a message in the server window
+// then changed it to get a header message
+wss.on('headers', (headers, req) => {
+    console.log(headers)
+})
 
+// next is thing you would do is get the socket.
+// ws stands for web socket 
+// first console.log web socket.
+wss.on('connection', (ws, req) => {
+    console.log(ws)
+})
 
 server.listen(8000)
